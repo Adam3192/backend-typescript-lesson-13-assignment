@@ -1,16 +1,28 @@
 import React, { useContext, useState, useEffect } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import CoffeeContext from '../contexts/CoffeeContext'
 
 const EditCoffee = () => {
+  let params = useParams()
   let [editedCoffee, setEditedCoffee] = useState({
+    id: params._id,
     name: '',
     description: '',
     price: 0,
   })
 
-  let { coffee, editCoffee, getCoffee } = useContext(CoffeeContext)
+  let { coffee, editCoffee, getCoffee, deleteCoffee } = useContext(CoffeeContext)
   let navigate = useNavigate()
+  let { id, name, description, price } = editedCoffee
+  // let id = params._id
+
+  useEffect(() => {
+    if (id === undefined) return
+    async function fetch() {
+      await getCoffee(id).then((coffee) => setEditedCoffee(coffee))
+    }
+    fetch()
+  }, [id])
 
 //   useEffect(() => {
 //     getCoffee(coffee._id)
@@ -41,7 +53,7 @@ const EditCoffee = () => {
       <input
         type="text"
         name="name"
-        value={editedCoffee.coffeeName}
+        value={name}
         onChange={handleChange}
       />
       <br></br>
@@ -50,7 +62,7 @@ const EditCoffee = () => {
       <input
         type="text"
         name="description"
-        value={editedCoffee.description}
+        value={description}
         onChange={handleChange}
       />
       <br></br>
@@ -59,7 +71,7 @@ const EditCoffee = () => {
       <input
         type="number"
         name="price"
-        value={editedCoffee.price}
+        value={price}
         onChange={handleChange}
       />
       <br></br>

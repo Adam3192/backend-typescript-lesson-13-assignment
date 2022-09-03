@@ -29,8 +29,8 @@ function App() {
                     <Route path="/signin" element={ <SignIn /> } />
                     <Route path="/signup" element={ <SignUp /> } />
                     <Route path="/coffee/new" element={ <NewCoffee /> } />
-                    <Route path="/coffee/delete" element={ <DeleteCoffee /> } />
-                    <Route path="/coffee/:id" element={ <EditCoffee /> } />
+                    {/* <Route path="/coffee/delete" element={ <DeleteCoffee /> } /> */}
+                    <Route path="/coffee/:_id" element={ <EditCoffee /> } />
                     <Route path="/coffee" element={ <CoffeeList /> } />
                 </Routes>
             </BrowserRouter>

@@ -1,18 +1,18 @@
-import React, { useContext, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
-import CoffeeContext from '../contexts/CoffeeContext'
+// import React, { useContext, useState } from 'react'
+// import { useNavigate } from 'react-router-dom'
+// import CoffeeContext from '../contexts/CoffeeContext'
 
-const DeleteCoffee = () => {
-  let { deleteCoffee } = useContext(CoffeeContext)
-  let navigate = useNavigate()
+// const DeleteCoffee = () => {
+//   let { deleteCoffee } = useContext(CoffeeContext)
+//   let navigate = useNavigate()
 
-  deleteCoffee()
+//   deleteCoffee()
 
-  navigate('/coffee')
+//   navigate('/coffee')
 
-  // return (
+//   return (
 
-  // )
-}
+//   )
+// }
 
-export default DeleteCoffee
+// export default DeleteCoffee

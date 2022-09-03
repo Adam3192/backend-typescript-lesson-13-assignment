@@ -1,8 +1,11 @@
 import axios from 'axios'
 import { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import CoffeeContext from './CoffeeContext'
 
 export const CoffeeProvider = (props) => {
+  // let navigate = useNavigate()
+
   const [coffee, setCoffee] = useState([])
   const baseUrl = 'http://localhost:3000/api/coffee/'
 
@@ -18,10 +21,12 @@ export const CoffeeProvider = (props) => {
   }
 
   function getCoffee(id) {
-    return axios.get(baseUrl + id).then((response) => {
-      getAllCoffee()
-      return new Promise((resolve) => resolve(response.data))
-    })
+    return axios
+      .get(baseUrl + id)
+      .then((response) => new Promise((resolve) => resolve(response.data)))
+      .catch(
+        (error) => new Promise((_, reject) => reject(error.response.statusText))
+      )
   }
 
   function addCoffee(coffee) {
@@ -43,17 +48,33 @@ export const CoffeeProvider = (props) => {
     }
 
     return axios
-      .put(baseUrl + coffee.id, coffee, { headers: myHeaders })
+      .put(baseUrl + coffee._id, coffee, { headers: myHeaders })
       .then((response) => {
-        getAllCoffee();
+        getAllCoffee()
         return new Promise((resolve) => resolve(response.data))
       })
   }
 
+  // function deleteCoffee(id) {
+  //   return axios.delete(baseUrl + id).then((response) => {
+  //     getAllCoffee()
+  //   })
+  // }
+
   function deleteCoffee(id) {
-    return axios.delete(baseUrl + id).then(response => {
-      getAllCoffee();
-    })
+    // let navigate = useNavigate()
+
+    let myHeaders = {
+      Authorization: `Bearer ${localStorage.getItem('myCoffeeToken')}`,
+    }
+
+    axios
+      .delete(baseUrl + id, { headers: myHeaders })
+      .then(getAllCoffee)
+      .catch((error) => {
+        console.log(error)
+        // navigate('/signin')
+      })
   }
 
   return (
